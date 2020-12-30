@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\Agent\DashboardController;
+use App\Http\Controllers\Agent\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard');
+
+/*
+|--------------------------------------------------------------------------
+| ユーザー
+|--------------------------------------------------------------------------
+*/
+Route::domain(config('myapp.domain'))->name('user.')->group(function () {
+
+    // TOP
+    Route::get('/', [HomeController::class, 'show'])
+        ->name('home');
+
+});
+
+/*
+|--------------------------------------------------------------------------
+| 全権
+|--------------------------------------------------------------------------
+*/
+Route::domain('agent.' . config('myapp.domain'))->name('agent.')->group(function () {
+
+    // ダッシュボード
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
+
+    Route::resource('category', CategoryController::class);
 });
