@@ -14,5 +14,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $this->call(CategoryTableSeeder::class);
+        $this->call(GenreTableSeeder::class);
+        $this->call(MenuTableSeeder::class);
+        $this->call(MenuImageTableSeeder::class);
+        $this->call(RecipeTableSeeder::class);
     }
 }
